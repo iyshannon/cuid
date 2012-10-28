@@ -1,6 +1,7 @@
 cuid.rb - CUID ported to Ruby
 =====================
 Release date: October 27, 2012
+[![Build Status](https://travis-ci.org/iyshannon/cuid.png)](https://travis-ci.org/iyshannon/cuid)
 
 Authors
 =======
