@@ -20,9 +20,9 @@ ch72gsb320000udocl363eofy
 
 System Requirements
 ===================
-This gem was developed under `ruby1.9.3-p286` but I will be testing it under a few other versions shortly.
+This gem was developed under `ruby1.9.3-p286` but is tested under multiple versions thanks to [Travis CI](http://www.travis-ci.org).
 
-Expected to test under:
+Tested under:
 
 * Ruby 1.8.7
 * Ruby 1.9.2
