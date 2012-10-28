@@ -1,16 +1,17 @@
 cuid.rb - CUID ported to Ruby
 =====================
-Release date: October 26, 2012
+Release date: October 27, 2012
 
 Authors
 =======
-* Ian Shannon (port to Ruby)
-* Eric Elliott (original JavaScript version)
+* Ian Shannon [(ported to Ruby)](http://github.com/iyshannon/cuid)
+* Eric Elliott [(original JavaScript version)](http://github.com/dilvie/cuid)
 
 Introduction
 ============
-cuid.rb is a ruby library that provides `collision-resistant ids optimized for horizontal scaling and sequential lookup performance`
-Please refer to the [original author's repository](http://github.com/dilvie/cuid) for an indepth README.
+cuid.rb is a ruby library that provides collision-resistant ids optimized for horizontal scaling and sequential lookup performance.
+
+Please refer to the [original author's repository](http://github.com/dilvie/cuid) for an in-depth README.
 
 Example
 =======
@@ -18,7 +19,14 @@ ch72gsb320000udocl363eofy
 
 System Requirements
 ===================
-Tested under ruby 1.............
+This gem was developed under `ruby1.9.3-p286` but I will be testing it under a few other versions shortly.
+
+Expected to test under:
+
+* Ruby 1.8.7
+* Ruby 1.9.2
+* Ruby 1.9.3
+* JRuby 1.9 (jruby19mode)
 
 Installation
 ============
