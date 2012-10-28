@@ -149,7 +149,9 @@ module Cuid
     def get_fingerprint
       padding = 2
       hostname = Socket.gethostname
-      hostid = hostname.split('').inject(hostname.length+BASE) { |a,i| a += i.ord }
+      hostid = hostname.split('').inject(hostname.length+BASE) do |a,i|
+        a += (i.respond_to? "ord") ? i.ord : i[0]
+      end
       return format($$, padding) + format(hostid, padding)
     end
 
