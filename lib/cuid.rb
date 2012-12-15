@@ -1,6 +1,9 @@
 require "socket"
 require 'cuid/version'
-
+begin
+  require "securerandom"
+rescue LoadError
+end
 
 ##
 # Cuid is a library for generating unique collision-resistant IDs optimized for horizontal scaling and performance
@@ -17,7 +20,7 @@ module Cuid
   ##
   # @private
   @count = 0
-
+  
   ##
   # length of each segment of the hash
   BLOCK_SIZE = 4
@@ -66,7 +69,14 @@ module Cuid
     #   
     #   @param [Integer] quantity determines number of hashes returned (must be greater than 1)
     #   @return [Array<String>]
-    def generate(quantity=1)
+    #
+    # @overload generate(quantity,secure_random)
+    #   Returns an array of hashes when called with a parameter greater than 1
+    #
+    #   @param [Integer] quantity determines number of hashes returned (must be greater than 1)
+    #   @param [Boolean] secure_random attempts to use SecureRandom if set to True (Ruby 1.9.2 and up; reverts to Kernel#rand if SecureRandom is not supported)
+    def generate(quantity=1,secure_random=false)
+      @use_secure_random = secure_random
       @fingerprint = get_fingerprint # only need to get the fingerprint once because it is constant per-run
       return api unless quantity > 1
 
@@ -139,7 +149,13 @@ module Cuid
     #
     # @private
     def get_random_block
-      return ((rand * (RAND_MAX - RAND_MIN)) + RAND_MIN).truncate.to_s(BASE)
+      @secure_random = defined?(SecureRandom) if @secure_random.nil?
+      if @secure_random && @use_secure_random then
+        number = SecureRandom.random_number(RAND_MAX - RAND_MIN) + RAND_MIN
+      else
+        number = ((rand * (RAND_MAX - RAND_MIN)) + RAND_MIN)
+      end
+      return number.truncate.to_s(BASE)
     end
 
     ##

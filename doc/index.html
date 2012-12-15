@@ -562,31 +562,50 @@ $(generateTOC);
       <div id="readme">
   <h1>cuid.rb - CUID ported to Ruby</h1>
 
-<p>Release date: October 27, 2012
-<a href="https://travis-ci.org/iyshannon/cuid"><img src="https://travis-ci.org/iyshannon/cuid.png" alt="Build Status"></a></p>
+<p>Last updated: December 15, 2012
+<a href="https://travis-ci.org/iyshannon/cuid"><img src="https://travis-ci.org/iyshannon/cuid.png" alt="Build Status"></a>
+Documentation: <a href="http://iyshannon.github.com/cuid">http://iyshannon.github.com/cuid</a></p>
 
-<h1>Authors</h1>
-
-<ul>
-<li>Ian Shannon <a href="http://github.com/iyshannon/cuid">(ported to Ruby)</a></li>
-<li>Eric Elliott <a href="http://github.com/dilvie/cuid">(original JavaScript version)</a></li>
-</ul>
-
-<h1>Introduction</h1>
+<h2>Introduction</h2>
 
 <p>cuid.rb is a ruby library that provides collision-resistant ids optimized for horizontal scaling and sequential lookup performance.</p>
 
-<p>Please refer to the <a href="http://github.com/dilvie/cuid">original author&#39;s repository</a> for an in-depth README.</p>
+<p>This is just going to cover the basics and the Ruby-specific implementation details.</p>
 
-<h1>Example</h1>
+<p><strong>Please refer to the <a href="http://usecuid.org">main project site</a> for the full story.</strong></p>
+
+<h2>Example</h2>
 
 <p>ch72gsb320000udocl363eofy</p>
 
-<h1>System Requirements</h1>
+<h3>Broken down</h3>
 
-<p>This gem was developed under <code>ruby1.9.3-p286</code> but I will be testing it under a few other versions shortly.</p>
+<p>** c - h72gsb32 - 0000 - udoc - l363eofy **</p>
 
-<p>Expected to test under:</p>
+<p>The groups, in order, are:</p>
+
+<ul>
+<li>&#39;c&#39; - identifies this as a cuid, and allows you to use it in html entity ids. The fixed value helps keep the ids sequential.</li>
+<li>Timestamp</li>
+<li>Counter - a single process might generate the same random string. The weaker the pseudo-random source, the higher the probability. That problem gets worse as processors get faster. The counter will roll over if the value gets too big.</li>
+<li>Client fingerprint
+
+<ul>
+<li>In Ruby, the first two characters are based on the process ID and the next two characters are based on the hostname.  This is the same method used in the Node implementation.</li>
+</ul></li>
+<li>Pseudo random number
+
+<ul>
+<li>By default, Ruby uses the <code>Kernel#rand</code> function, a Mersenne Twister PRNG.</li>
+<li>On Ruby 1.9.2 and up, it can optionally use the <code>SecureRandom</code> library (which uses OpenSSL), but there is a significant performance cost.</li>
+</ul></li>
+</ul>
+
+<h2>System Requirements</h2>
+
+<p>This gem was developed under <code>ruby1.9.3-p286</code> but is tested under multiple versions thanks to <a href="http://www.travis-ci.org">Travis CI</a>.</p>
+
+<p>Tested under:</p>
 
 <ul>
 <li>Ruby 1.8.7</li>
@@ -595,12 +614,12 @@ $(generateTOC);
 <li>JRuby 1.9 (jruby19mode)</li>
 </ul>
 
-<h1>Installation</h1>
+<h2>Installation</h2>
 
 <pre class="code ruby"><code><span class='id identifier rubyid_gem'>gem</span> <span class='id identifier rubyid_install'>install</span> <span class='id identifier rubyid_cuid'>cuid</span>
 </code></pre>
 
-<h1>Example Usage</h1>
+<h2>Example Usage</h2>
 
 <pre class="code ruby"><code>irb(main):001:0&gt; require &quot;cuid&quot; 
 =&gt; true
@@ -612,7 +631,14 @@ irb(main):004:0&gt; Cuid::generate(4)
 =&gt; [&quot;ch8qyq35f0002a4wekjcwmh30&quot;, &quot;ch8qyq35f0003a4weewy22izq&quot;, &quot;ch8qyq35f0004a4webzzelvdv&quot;, &quot;ch8qyq35f0005a4wesg3tfjk5&quot;]    
 </code></pre>
 
-<h1>MIT Open Source License</h1>
+<h2>Credit</h2>
+
+<ul>
+<li>Ian Shannon <a href="http://github.com/iyshannon/cuid">(ported to Ruby)</a></li>
+<li>Eric Elliott <a href="http://github.com/dilvie/cuid">(original JavaScript version)</a></li>
+</ul>
+
+<h2>MIT Open Source License</h2>
 
 <p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
 
@@ -783,7 +809,7 @@ irb(main):004:0&gt; Cuid::generate(4)
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#generate-class_method" title="generate (class method)">+ (Object) <strong>generate</strong>(quantity = 1) </a>
+      <a href="#generate-class_method" title="generate (class method)">+ (Object) <strong>generate</strong>(quantity = 1, secure_random = false) </a>
     
 
     
@@ -842,6 +868,8 @@ irb(main):004:0&gt; Cuid::generate(4)
       <span class="overload">+ (<tt>String</tt>) <strong>generate</strong> </span>
     
       <span class="overload">+ (<tt>Array&lt;String&gt;</tt>) <strong>generate</strong>(quantity) </span>
+    
+      <span class="overload">+ (<tt>Object</tt>) <strong>generate</strong>(quantity, secure_random) </span>
     
   
 
@@ -956,6 +984,56 @@ irb(main):004:0&gt; Cuid::generate(4)
 </div>
       </li>
     
+      
+      <li class="overload_item">
+        <span class="signature">+ (<tt>Object</tt>) <strong>generate</strong>(quantity, secure_random) </span>
+        <div class="docstring">
+  <div class="discussion">
+    <p>Returns an array of hashes when called with a parameter greater than 1</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>quantity</span>
+      
+      
+        <span class='type'>(<tt>Integer</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>determines number of hashes returned (must be greater than 1)</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>secure_random</span>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>attempts to use SecureRandom if set to True (Ruby 1.9.2 and up; reverts to Kernel#rand if SecureRandom is not supported)</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div>
+      </li>
+    
   </ul>
 
 
@@ -965,18 +1043,20 @@ irb(main):004:0&gt; Cuid::generate(4)
       <pre class="lines">
 
 
-69
-70
-71
-72
-73
-74
-75</pre>
+78
+79
+80
+81
+82
+83
+84
+85</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/cuid.rb', line 69</span>
+      <pre class="code"><span class="info file"># File 'lib/cuid.rb', line 78</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_generate'>generate</span><span class='lparen'>(</span><span class='id identifier rubyid_quantity'>quantity</span><span class='op'>=</span><span class='int'>1</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_generate'>generate</span><span class='lparen'>(</span><span class='id identifier rubyid_quantity'>quantity</span><span class='op'>=</span><span class='int'>1</span><span class='comma'>,</span><span class='id identifier rubyid_secure_random'>secure_random</span><span class='op'>=</span><span class='kw'>false</span><span class='rparen'>)</span>
+  <span class='ivar'>@use_secure_random</span> <span class='op'>=</span> <span class='id identifier rubyid_secure_random'>secure_random</span>
   <span class='ivar'>@fingerprint</span> <span class='op'>=</span> <span class='id identifier rubyid_get_fingerprint'>get_fingerprint</span> <span class='comment'># only need to get the fingerprint once because it is constant per-run
 </span>  <span class='kw'>return</span> <span class='id identifier rubyid_api'>api</span> <span class='kw'>unless</span> <span class='id identifier rubyid_quantity'>quantity</span> <span class='op'>&gt;</span> <span class='int'>1</span>
 
@@ -1052,13 +1132,13 @@ string is the correct length and consists of lower case letters and numbers.</p>
       <pre class="lines">
 
 
-85
-86
-87
-88</pre>
+95
+96
+97
+98</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/cuid.rb', line 85</span>
+      <pre class="code"><span class="info file"># File 'lib/cuid.rb', line 95</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_validate'>validate</span><span class='lparen'>(</span><span class='id identifier rubyid_str'>str</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_blen'>blen</span> <span class='op'>=</span> <span class='const'>BLOCK_SIZE</span> <span class='op'>*</span> <span class='int'>6</span>
@@ -1075,7 +1155,7 @@ string is the correct length and consists of lower case letters and numbers.</p>
     </div>
 
     <div id="footer">
-  Generated on Sun Oct 28 00:09:23 2012 by
+  Generated on Sat Dec 15 18:35:10 2012 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.3 (ruby-1.9.3).
 </div>

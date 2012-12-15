@@ -39,7 +39,18 @@ class CuidTest < Test::Unit::TestCase
     end
     assert !collision
   end
-  
+
+  def test_secure_random
+    results = {}
+    collision = false
+    c = Cuid::generate(1000,true)
+    c.each do |e|
+      collision = true if results[e]
+      results[e] = true
+    end
+    assert !collision
+  end
+
   def test_version
     assert_nothing_raised { Cuid::VERSION }
   end
