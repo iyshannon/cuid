@@ -1,6 +1,7 @@
 # cuid.rb - CUID ported to Ruby
 Last updated: December 15, 2012
 [![Build Status](https://travis-ci.org/iyshannon/cuid.png)](https://travis-ci.org/iyshannon/cuid)
+
 Documentation: [http://iyshannon.github.com/cuid](http://iyshannon.github.com/cuid)
 
 ## Introduction
