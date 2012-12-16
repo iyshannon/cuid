@@ -2,4 +2,3 @@
 --protected
 --markup="markdown" lib/cuid.rb
 --main README.md
---one-file

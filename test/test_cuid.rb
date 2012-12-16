@@ -24,7 +24,7 @@ class CuidTest < Test::Unit::TestCase
     assert Cuid::validate(c)
   end
 
-  def test_valiate_false
+  def test_validate_false
     c = "d00000000000000000000"
     assert !Cuid::validate(c)
   end
