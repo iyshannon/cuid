@@ -75,6 +75,7 @@ module Cuid
     #
     #   @param [Integer] quantity determines number of hashes returned (must be greater than 1)
     #   @param [Boolean] secure_random attempts to use SecureRandom if set to True (Ruby 1.9.2 and up; reverts to Kernel#rand if SecureRandom is not supported)
+    #   @return [Array<String>]
     def generate(quantity=1,secure_random=false)
       @use_secure_random = secure_random
       @fingerprint = get_fingerprint # only need to get the fingerprint once because it is constant per-run
