@@ -563,8 +563,9 @@ $(generateTOC);
   <h1>cuid.rb - CUID ported to Ruby</h1>
 
 <p>Last updated: December 15, 2012
-<a href="https://travis-ci.org/iyshannon/cuid"><img src="https://travis-ci.org/iyshannon/cuid.png" alt="Build Status"></a>
-Documentation: <a href="http://iyshannon.github.com/cuid">http://iyshannon.github.com/cuid</a></p>
+<a href="https://travis-ci.org/iyshannon/cuid"><img src="https://travis-ci.org/iyshannon/cuid.png" alt="Build Status"></a></p>
+
+<p>Documentation: <a href="http://iyshannon.github.com/cuid">http://iyshannon.github.com/cuid</a></p>
 
 <h2>Introduction</h2>
 
@@ -869,7 +870,7 @@ irb(main):004:0&gt; Cuid::generate(4)
     
       <span class="overload">+ (<tt>Array&lt;String&gt;</tt>) <strong>generate</strong>(quantity) </span>
     
-      <span class="overload">+ (<tt>Object</tt>) <strong>generate</strong>(quantity, secure_random) </span>
+      <span class="overload">+ (<tt>Array&lt;String&gt;</tt>) <strong>generate</strong>(quantity, secure_random) </span>
     
   
 
@@ -986,7 +987,7 @@ irb(main):004:0&gt; Cuid::generate(4)
     
       
       <li class="overload_item">
-        <span class="signature">+ (<tt>Object</tt>) <strong>generate</strong>(quantity, secure_random) </span>
+        <span class="signature">+ (<tt>Array&lt;String&gt;</tt>) <strong>generate</strong>(quantity, secure_random) </span>
         <div class="docstring">
   <div class="discussion">
     <p>Returns an array of hashes when called with a parameter greater than 1</p>
@@ -1030,6 +1031,19 @@ irb(main):004:0&gt; Cuid::generate(4)
   
 </ul>
 
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt;String&gt;</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
 
 </div>
       </li>
@@ -1043,17 +1057,17 @@ irb(main):004:0&gt; Cuid::generate(4)
       <pre class="lines">
 
 
-78
 79
 80
 81
 82
 83
 84
-85</pre>
+85
+86</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/cuid.rb', line 78</span>
+      <pre class="code"><span class="info file"># File 'lib/cuid.rb', line 79</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_generate'>generate</span><span class='lparen'>(</span><span class='id identifier rubyid_quantity'>quantity</span><span class='op'>=</span><span class='int'>1</span><span class='comma'>,</span><span class='id identifier rubyid_secure_random'>secure_random</span><span class='op'>=</span><span class='kw'>false</span><span class='rparen'>)</span>
   <span class='ivar'>@use_secure_random</span> <span class='op'>=</span> <span class='id identifier rubyid_secure_random'>secure_random</span>
@@ -1132,13 +1146,13 @@ string is the correct length and consists of lower case letters and numbers.</p>
       <pre class="lines">
 
 
-95
 96
 97
-98</pre>
+98
+99</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/cuid.rb', line 95</span>
+      <pre class="code"><span class="info file"># File 'lib/cuid.rb', line 96</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_validate'>validate</span><span class='lparen'>(</span><span class='id identifier rubyid_str'>str</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_blen'>blen</span> <span class='op'>=</span> <span class='const'>BLOCK_SIZE</span> <span class='op'>*</span> <span class='int'>6</span>
@@ -1155,7 +1169,7 @@ string is the correct length and consists of lower case letters and numbers.</p>
     </div>
 
     <div id="footer">
-  Generated on Sat Dec 15 18:35:10 2012 by
+  Generated on Sat Dec 15 19:12:14 2012 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.3 (ruby-1.9.3).
 </div>
