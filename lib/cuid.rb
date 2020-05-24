@@ -95,7 +95,7 @@ module Cuid
     # @return [Boolean] returns true if the format is correct
     def validate(str)
       blen = BLOCK_SIZE * 6
-      !!str.match(/#{LETTER}[a-z0-9]{#{blen}}/)
+      !!str.match(/\A#{LETTER}[a-z0-9]{#{blen}}\z/)
     end
    
     private
